@@ -21,11 +21,9 @@ class Database {
       "quantidade": p.quantidade
     };
     firestore.collection("produtos").add(produto);
-    //.then((DocumentReference doc) =>print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   Future<void> editar(String id, Produto p) async {
-    //print("id -----> $id");
     final produto = <String, dynamic>{
       "categoria": p.categoria,
       "nome": p.nome,
@@ -213,11 +211,9 @@ class Database {
     firestore.collection("usuarios").add(usuario).then(
         (DocumentReference doc) =>
             {globals.idCliente = doc.id, globals.isLoggedIn = true});
-    //.then((DocumentReference doc) =>print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   Future<void> atualizarProduto(String id, Produto p) async {
-    //print("id -----> $id");
     final produto = <String, dynamic>{
       "categoria": p.categoria,
       "nome": p.nome,
@@ -238,7 +234,6 @@ class Database {
       "idProduto": c.idProduto,
     };
     firestore.collection("carrinhos").add(carrinho);
-    //.then((DocumentReference doc) => print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   Future<List> listarCarrinho(String idCliente) async {
@@ -290,7 +285,6 @@ class Database {
   }
 
   Future<bool> deletarTodosCarrinhosByCliente(String idCliente) async {
-    //print("Cheguei no deletar");
     QuerySnapshot querySnapshot;
     try {
       querySnapshot = await firestore
@@ -298,13 +292,11 @@ class Database {
           .where('idCliente', isEqualTo: idCliente)
           .get();
       if (querySnapshot.docs.isNotEmpty) {
-        //print("query to list");
-        //print(querySnapshot.docs.toList());
         for (var doc in querySnapshot.docs.toList()) {
           firestore
               .collection("carrinhos")
               .doc(doc.id)
-              .delete(); //.then((value) => print("deletado com sucesso!"));
+              .delete();
         }
         return true;
       }

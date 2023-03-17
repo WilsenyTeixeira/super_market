@@ -20,24 +20,12 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     valorTotal = 0;
     db = Database();
     db.initiliase();
-    /*db.listarPadaria().then((value) => {
-          setState(() {
-            docs = value;
-          })
-        });
-    */
     db.listarCarrinho(globals.idCliente).then((value) => {
           setState(() {
             docs = value;
             valorTotal = valorTotalCompra();
-            //print("listar carrinho");
-            //print(valorTotal.runtimeType);
           })
         });
-
-    /*setState(() {
-      valorTotal = valorTotalCompra();
-    });*/
   }
 
   @override
@@ -48,11 +36,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
 
   num valorTotalCompra() {
     for (var produto in docs) {
-      //print("Olá, entrei no valor toltalcompra");
-      //print(produto['preco']);
-      //print(produto['preco'].runtimeType);
       valorTotal += num.parse(produto['preco'].toString());
-      //print(valorTotal);
     }
     return valorTotal;
   }
@@ -61,9 +45,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     if (await db.deletarTodosCarrinhosByCliente(globals.idCliente)) {
       for (var produto in docs) {
         produto['quantidade'] -= 1;
-        //print("contrução");
-        //print(produto['quantidade']);
-        //print(produto['quantidade'].runtimeType);
         Produto produtoAuxiliar = Produto(
             produto['nome'],
             produto['categoria'],
@@ -94,18 +75,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                   child: Card(
                     margin: const EdgeInsets.all(10),
                     child: ListTile(
-                      /*onTap: () {
-                        //print("docs[index]---> $docs[index]['id']");
-                        Map<String, String> produto() => {
-                              "id": docs[index]['id'],
-                              "acategoria": docs[index]['categoria'],
-                              "nome": docs[index]['nome'],
-                              "preco": docs[index]['preco'],
-                              "promocao": docs[index]['promocao'],
-                              "quantidade": docs[index]['quantidade'],
-                            };
-                        _colocarCarrinho(produto());
-                      },*/
                       contentPadding:
                           const EdgeInsets.only(right: 30, left: 36),
                       title: Text(docs[index]['nome']),
@@ -126,7 +95,11 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             width: 100,
             height: 40,
             child: IconButton(
-                onPressed: () {_comprarProdutos(); ScaffoldMessenger.of(context).showSnackBar(snackBar);}, icon: const Icon(Icons.check)),
+                onPressed: () {
+                  _comprarProdutos();
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                },
+                icon: const Icon(Icons.check)),
           ),
         ]),
       ),
@@ -135,6 +108,5 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
 }
 
 const snackBar = SnackBar(
-  content:
-      Text('Compra realizada com sucesso!!'),
+  content: Text('Compra realizada com sucesso!!'),
 );

@@ -62,8 +62,6 @@ class LoginPageState extends State<LoginPage> {
   void validaUsuario() async {
     bool boolone = await db.validarUsuario(Usuario(email.text, senha.text));
     bool booltwo = await auxiliarForTrue;
-    //print("boolone x booltwo");
-    //print(boolone == booltwo);
     resultado = (boolone == booltwo);
     setState(() {
       resultado = (boolone == booltwo);
@@ -132,19 +130,9 @@ class LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         if (isLogin) {
-                          //print(email.text);
-                          /*
-                          print("resultado antes do validaUsuario() =");
-                            print(resultado);
-                          validaUsuario();
-                          print("resultado depois do validaUsuario() =");
-                            print(resultado);
-                          */
                           setState(() {
                             validaUsuario();
-                            //print(resultado);
                           });
-                          //print(resultado);
                           if (resultado == true) {
                             Navigator.of(context).push(
                               MaterialPageRoute(

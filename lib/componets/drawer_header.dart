@@ -20,12 +20,6 @@ class MyHeaderDrawerState extends State<MyHeaderDrawer> {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             height: 70,
-            //decoration: BoxDecoration(
-              //shape: BoxShape.circle,
-              //image: DecorationImage(
-                //image: AssetImage('assets/images/profile.jpg'),
-              //),
-            //),
           ),
           const Text(
             "Super Market",

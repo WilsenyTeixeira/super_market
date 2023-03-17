@@ -94,46 +94,6 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-          /*IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Logout Feito com Sucesso')));
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(isLogout: true,),
-                ),
-              );
-            },
-          ),*/
-          /*
-          IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined),
-            tooltip: 'Carrinho de Compras',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => CarrinhoPage(),
-                ),
-              );*/
-          /*Navigator.push(context, MaterialPageRoute<void>(
-                builder: (BuildContext context) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: const Text('Carrinho de Compras'),
-                    ),
-                    body: const Center(
-                      child: Text(
-                        'Carrinho de Compras',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  );
-                },
-              ));
-            },
-          ),*/
         ],
       ),
       body: container,
@@ -156,7 +116,6 @@ class HomePageState extends State<HomePage> {
         top: 15,
       ),
       child: Column(
-        // shows the list of menu drawer
         children: [
           menuItem(1, "Home", Icons.dashboard_outlined,
               currentPage == DrawerSections.home ? true : false),
