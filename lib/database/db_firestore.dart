@@ -3,6 +3,7 @@ import 'package:super_market/colecao_firebase/produto.dart';
 import 'package:super_market/colecao_firebase/usuario.dart';
 import 'package:super_market/colecao_firebase/carrinho.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'globals.dart' as globals;
 
 class Database {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -196,6 +197,11 @@ class Database {
     } catch (e) {
       //print(e);
     }
+    if (docs.isNotEmpty) {
+      globals.idCliente = docs[0]["id"];
+      globals.isLoggedIn = true;
+    }
+
     return (docs.isNotEmpty);
   }
 
@@ -204,7 +210,9 @@ class Database {
       "email": u.email,
       "senha": u.senha,
     };
-    firestore.collection("usuarios").add(usuario);
+    firestore.collection("usuarios").add(usuario).then(
+        (DocumentReference doc) =>
+            {globals.idCliente = doc.id, globals.isLoggedIn = true});
     //.then((DocumentReference doc) =>print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
@@ -237,6 +245,9 @@ class Database {
     QuerySnapshot querySnapshot;
     List docs = [];
     List produtos = [];
+    if (idCliente == '') {
+      return produtos;
+    }
     try {
       querySnapshot = await firestore
           .collection('carrinhos')
@@ -290,7 +301,10 @@ class Database {
         //print("query to list");
         //print(querySnapshot.docs.toList());
         for (var doc in querySnapshot.docs.toList()) {
-          firestore.collection("carrinhos").doc(doc.id).delete();//.then((value) => print("deletado com sucesso!"));
+          firestore
+              .collection("carrinhos")
+              .doc(doc.id)
+              .delete(); //.then((value) => print("deletado com sucesso!"));
         }
         return true;
       }

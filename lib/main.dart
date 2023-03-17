@@ -7,6 +7,7 @@ import 'pages/page_acougue.dart';
 import 'pages/page_padaria.dart';
 import 'pages/page_login.dart';
 import 'pages/page_carrinho.dart';
+import 'database/globals.dart' as globals;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -82,6 +83,8 @@ class HomePageState extends State<HomePage> {
                   icon: const Icon(Icons.logout),
                   tooltip: 'Logout',
                   onPressed: () {
+                    globals.idCliente = '';
+                    globals.isLoggedIn = false;
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Logout Feito com Sucesso')));
                     Navigator.of(context).push(

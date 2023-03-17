@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:super_market/database/db_firestore.dart';
 import 'package:super_market/colecao_firebase/carrinho.dart';
-
+import 'package:super_market/database/globals.dart' as globals;
 class PadariaPage extends StatefulWidget {
   const PadariaPage({super.key});
 
@@ -55,19 +55,13 @@ class _PadariaPageState extends State<PadariaPage> {
                     margin: const EdgeInsets.all(10),
                     child: ListTile(
                       onTap: () {
-                        Carrinho carrinho =
-                            Carrinho('EdU93fDlPVMac06ik8Is', docs[index]['id']);
-                        _colocarProdutoCarrinho(carrinho);
-                        //print("docs[index]---> $docs[index]['id']");
-                        /*Map<String, String> produto() => {
-                      "id": docs[index]['id'],
-                      "acategoria": docs[index]['categoria'],
-                      "nome": docs[index]['nome'],
-                      "preco": docs[index]['preco'],
-                      "promocao": docs[index]['promocao'],
-                      "quantidade": docs[index]['quantidade'],
-                    };
-                _colocarCarrinho(produto());*/
+                        if (globals.idCliente == '') {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          Carrinho carrinho =
+                              Carrinho(globals.idCliente, docs[index]['id']);
+                          _colocarProdutoCarrinho(carrinho);
+                        }
                       },
                       contentPadding:
                           const EdgeInsets.only(right: 30, left: 36),
@@ -85,3 +79,7 @@ class _PadariaPageState extends State<PadariaPage> {
     ));
   }
 }
+
+const snackBar = SnackBar(
+  content: Text('Faça o login primeiro para adicionar um produto ao seu carrinho!!'),
+);

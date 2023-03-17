@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:super_market/colecao_firebase/produto.dart';
 import 'package:super_market/database/db_firestore.dart';
+import 'package:super_market/database/globals.dart' as globals;
 
 class CarrinhoPage extends StatefulWidget {
   const CarrinhoPage({super.key});
@@ -25,7 +26,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
           })
         });
     */
-    db.listarCarrinho('EdU93fDlPVMac06ik8Is').then((value) => {
+    db.listarCarrinho(globals.idCliente).then((value) => {
           setState(() {
             docs = value;
             valorTotal = valorTotalCompra();
@@ -56,8 +57,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     return valorTotal;
   }
 
-  void _comprarProdutos() async{
-    if (await db.deletarTodosCarrinhosByCliente('EdU93fDlPVMac06ik8Is')) {
+  void _comprarProdutos() async {
+    if (await db.deletarTodosCarrinhosByCliente(globals.idCliente)) {
       for (var produto in docs) {
         produto['quantidade'] -= 1;
         //print("contrução");
@@ -125,10 +126,15 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             width: 100,
             height: 40,
             child: IconButton(
-                onPressed: _comprarProdutos, icon: const Icon(Icons.check)),
+                onPressed: () {_comprarProdutos(); ScaffoldMessenger.of(context).showSnackBar(snackBar);}, icon: const Icon(Icons.check)),
           ),
         ]),
       ),
     );
   }
 }
+
+const snackBar = SnackBar(
+  content:
+      Text('Compra realizada com sucesso!!'),
+);

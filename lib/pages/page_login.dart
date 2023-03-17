@@ -107,8 +107,8 @@ class LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 24.0),
                   child: TextFormField(
                     controller: senha,
                     obscureText: true,
@@ -162,7 +162,8 @@ class LoginPageState extends State<LoginPage> {
                               .showSnackBar(snackBarCadastrar);
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(isLogin: false),
+                              builder: (context) =>
+                                  const HomePage(isLogin: false),
                             ),
                           );
                         }

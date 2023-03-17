@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:super_market/database/db_firestore.dart';
 import 'package:super_market/colecao_firebase/carrinho.dart';
+import 'package:super_market/database/globals.dart' as globals;
 
 class AcouguePage extends StatefulWidget {
   const AcouguePage({super.key});
@@ -54,9 +55,13 @@ class _AcouguePageState extends State<AcouguePage> {
                     margin: const EdgeInsets.all(10),
                     child: ListTile(
                       onTap: () {
-                        Carrinho carrinho =
-                            Carrinho('EdU93fDlPVMac06ik8Is', docs[index]['id']);
-                        _colocarProdutoCarrinho(carrinho);
+                        if (globals.idCliente == '') {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          Carrinho carrinho =
+                              Carrinho(globals.idCliente, docs[index]['id']);
+                          _colocarProdutoCarrinho(carrinho);
+                        }
                       },
                       contentPadding:
                           const EdgeInsets.only(right: 30, left: 36),
@@ -74,3 +79,8 @@ class _AcouguePageState extends State<AcouguePage> {
     );
   }
 }
+
+const snackBar = SnackBar(
+  content:
+      Text('Faça o login primeiro para adicionar um produto ao seu carrinho!!'),
+);
